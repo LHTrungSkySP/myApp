@@ -1,7 +1,6 @@
-import { Component, ErrorHandler, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from '../Services/authentication.service';
 import { AuthenticateRespone } from '../Models/authenticate';
@@ -55,12 +54,21 @@ export class LoginComponent implements OnInit {
         (respone)=>{
           let userInforAuth = respone.body as AuthenticateRespone;
           localStorage.setItem('currentUser',JSON.stringify(userInforAuth));
-          console.log('login respone: ' ,userInforAuth.user_ID ,'  ',respone.status);
-          this.router.navigateByUrl('/');
+          this.authenticationService.updateToken(userInforAuth);
+          console.log(userInforAuth.role);
+          if(userInforAuth.role==0){
+            this.router.navigate(['/']);
+            return;
+          }
+          else if(userInforAuth.role==1){
+          console.log('admin');
+            this.router.navigate(['admin']);
+            return;
+          }
         },
         (error)=>{
           console.log('Login error: ',error);
-        }
+        },
       )
   }
 }

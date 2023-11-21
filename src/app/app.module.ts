@@ -9,16 +9,19 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
+import { AdminModule } from './admin/admin.module';
 // used to create fake backend
 // import { fakeBackendProvider } from './_helpers';
 
 import { AppRoutingModule } from './app-routing.module';
-// import { JwtInterceptor, ErrorInterceptor } from './_helpers';
+import { JwtInterceptor } from './Helpers/jwt.interceptor';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './home/navbar/navbar.component';
+import { Page403Component } from './Pages/page-403/page-403.component';
+import { AdminRoutingModule } from './admin/admin-routing.module';
 // import { AlertComponent } from './_components';
 // import { HomeComponent } from './home';
 
@@ -27,13 +30,15 @@ import { NavbarComponent } from './home/navbar/navbar.component';
         BrowserModule,
         ReactiveFormsModule,
         HttpClientModule,
-        AppRoutingModule,
         PasswordModule,
         CheckboxModule,
         InputTextModule,
         ButtonModule,
         MenubarModule,
         AvatarModule,
+        AdminModule,
+        AdminRoutingModule,
+        AppRoutingModule,
     ],
     declarations: [
         AppComponent,
@@ -41,11 +46,12 @@ import { NavbarComponent } from './home/navbar/navbar.component';
         RegisterComponent,
         HomeComponent,
         NavbarComponent,
+        Page403Component,
         // AlertComponent,
         // HomeComponent
     ],
     providers: [
-        // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 
         // provider used to create fake backend

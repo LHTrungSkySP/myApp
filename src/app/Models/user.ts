@@ -1,8 +1,17 @@
 import { Guid } from "guid-typescript";
 
 export interface User {
-  id: Guid;
+  userId: Guid;
   userName: string;
-  role: string;
+  password: string;
+  role: number;
   createdDate: string;
+}
+export class RegisterUser {
+  userName: string;
+  password: string;
+  constructor(userName: string='', passWord:string=''){
+    this.userName=userName;
+    this.password=passWord;
+  }
 }

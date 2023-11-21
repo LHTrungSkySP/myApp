@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 
 import { AuthenticationService } from '../Services/authentication.service';
 
+// tự gửi token lên mỗi khi có request lên serve - khai báo trong module
+
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
     constructor(private authenticationService: AuthenticationService) {}

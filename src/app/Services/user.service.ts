@@ -10,8 +10,8 @@ export class UserService {
 
     constructor(private http: HttpClient) { }
 
-    getAll() {
-        return this.http.get<User[]>(LOGIN_URL+`/users`);
+    getAllUser() {
+        return this.http.get<User[]>(LOGIN_URL+`/user`);
     }
 
     register(user: AuthenticateRequest) {

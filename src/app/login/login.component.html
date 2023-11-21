@@ -3,13 +3,13 @@
     <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
       <div class="text-center mb-5">
         <img src="https://mesoco.vn/wp-content/uploads/2022/04/logo.png" alt="Image" height="50" class="mb-3">
-        <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
-        <span class="text-600 font-medium line-height-3">Don't have an account?</span>
-        <a routerLink="/register" class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</a>
+        <div class="text-900 text-3xl font-medium mb-3">{{'Xin chào' | uppercase}}</div>
+        <span class="text-600 font-medium line-height-3">Bạn chưa có tài khoản?</span>
+        <a routerLink="/register" class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Tạo tài khoản ngay!</a>
       </div>
 
       <div>
-        <label for="userName" class="block text-900 font-medium mb-2">Email</label>
+        <label for="userName" class="block text-900 font-medium mb-2">Tên đăng nhập</label>
         <div class="mb-3">
           <div class="card flex justify-content-center">
             <input formControlName="username" class="form-control"
@@ -18,10 +18,9 @@
             formControlName="username"
             >
           </div>
-          <!-- <small *ngIf="!userNameValidate" class="p-error block">Username is not available.</small> -->
         </div>
 
-        <label for="passWord" class="block text-900 font-medium mb-2">Password</label>
+        <label for="passWord" class="block text-900 font-medium mb-2">Mật khẩu</label>
         <div class="mb-3">
           <div class="card flex justify-content-center">
             <p-password [inputStyle]="{'width':'100%'}" class="w-full"
@@ -39,14 +38,14 @@
         <div class="flex align-items-center justify-content-between mb-6">
           <div class="flex align-items-center">
             <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>
-            <label for="rememberme1" class="text-900">Remember me</label>
+            <label for="rememberme1" class="text-900">Lưu tài khoản</label>
           </div>
-          <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
+          <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Quên mật khẩu?</a>
         </div>
         <div class="form-group">
             <button (click)="onSubmit()" pButton [disabled]="loading" class="btn btn-primary">
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-              Login
+              Đăng nhập
           </button>
         </div>
         <!-- <button (click)="login()" pButton pRipple label="Sign In" icon="pi pi-user" class="w-full"></button> -->
