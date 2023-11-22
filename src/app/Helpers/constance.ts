@@ -1,1 +1,1 @@
-export const LOGIN_URL = "http://localhost:90/api";
+export const SERVER_URL = "http://localhost:90/api";

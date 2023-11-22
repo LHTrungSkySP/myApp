@@ -3,29 +3,37 @@
    <app-content-navbar (createSuccess)="createSuccess($event);" (deleteSuccess)="deleteSeries()"></app-content-navbar> -->
 <div class="flex justify-content-center h-screen mt-3">
   <div class="flex-column flex ">
-
-
   <p-toast></p-toast>
   <app-content-navbar (createSuccess)="createSuccess($event);" (deleteSuccess)="deleteSeries()"></app-content-navbar>
   <div class="" style="min-width: 900px;">
     <div class="flex flex-column surface-300 flex flex-column w-12">
-      <p-table [value]="listUser" [ngStyle]="{'height': '700px'}" styleClass="static" [tableStyle]="{'position': 'static'}">
+      <p-table [value]="listUserPaging" [ngStyle]="{'height': '700px'}" styleClass="static">
         <ng-template pTemplate="header">
           <tr>
-            <th style="width:30%">Mã</th>
-            <th pSortableColumn="userName" style="width:20%">Tên Người dùng<p-sortIcon field="userName"></p-sortIcon>
+            <th></th>
+            <th style="width:500px">Mã</th>
+            <th pSortableColumn="userName" style="min-width:200px">Tên Người dùng<p-sortIcon field="userName"></p-sortIcon>
             </th>
             <th pSortableColumn="role" style="width:20%">Quyền<p-sortIcon field="role"></p-sortIcon></th>
             <th pSortableColumn="createdDate" style="width:20%">Ngày tạo<p-sortIcon field="createdDate"></p-sortIcon>
             </th>
+            <th style="width: 5%;"></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-user>
           <tr>
-            <td style="max-width:0px" class="text-overflow-ellipsis white-space-nowrap overflow-hidden">{{ user.userId }}</td>
+            <td>
+              <p-checkbox [(ngModel)]="user.checked"  [binary]="true" inputId="binary"></p-checkbox>
+            </td>
+            <td class="text-overflow-ellipsis white-space-nowrap overflow-hidden">{{ user.userId }}</td>
             <td>{{ user.userName }}</td>
-            <td>{{ user.role }}</td>
-            <td>{{ user.createdDate| date:"dd/mm/y" }}</td>
+            <td>{{ user.role | userRolePipe:'string'}}</td>
+            <td>{{ user.createdDate| date:"d/M/yyyy" }}</td>
+            <td class="flex">
+              <!-- <p-button icon="pi pi-wrench"  [rounded]="true" [styleClass]="'line-height-1'"></p-button> -->
+              <p-button [routerLink]="['detail',user.userId]" size="small" [styleClass]="'h-1rem w-1rem'" icon="pi pi-wrench" [rounded]="true" [text]="true" severity="secondary"></p-button>
+              <p-button (onClick)="deleteUser(user)" size="small" [styleClass]="'h-1rem w-1rem'" icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"></p-button>
+            </td>
           </tr>
         </ng-template>
       </p-table>
@@ -37,9 +45,8 @@
 </div>
 
 
-<!--
-</div>
-<div class="card flex justify-content-center gap-2">
+<!-- delete  -->
+<!-- <div class="card flex justify-content-center gap-2">
   <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 </div>
 <p-dialog [modal]="true" [dismissableMask]="true" *ngIf="showDetailDialog" [(visible)]="showDetailDialog"

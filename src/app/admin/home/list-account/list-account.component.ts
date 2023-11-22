@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Guid } from 'guid-typescript';
+import { MessageService } from 'primeng/api';
 import { User } from 'src/app/Models/user';
-import { UserService } from 'src/app/Services/user.service';
+import { AdminService } from 'src/app/Services/admin.service';
 
 @Component({
   selector: 'app-list-account',
@@ -8,7 +11,7 @@ import { UserService } from 'src/app/Services/user.service';
   styleUrls: ['./list-account.component.scss']
 })
 export class ListAccountComponent implements OnInit {
-  listUser!: User[];
+  listUser: User[]=new Array<User>();
   totalUser!: number;
   // listTypeStatus: TypeStatus[];
   // listTypeTask: TypeTask[];
@@ -20,10 +23,18 @@ export class ListAccountComponent implements OnInit {
   totalTask!: number;
   listUserPaging!: User[];
 
-  constructor(private userService: UserService) {
-    this.userService.getAllUser().subscribe(
+  constructor(
+    private adminService: AdminService,
+    private messageService: MessageService,
+    private router: Router
+    ) {
+    this.getListUser();
+  }
+
+  getListUser(){
+    this.adminService.getAllUser().subscribe(
       (respone) => {
-        console.log(respone);
+        // console.log(respone);
         this.listUser = respone;
         this.paging();
       },
@@ -41,16 +52,35 @@ export class ListAccountComponent implements OnInit {
   paging(): void {
     this.totalTask = this.listUser.length;
     this.pageNumber = Math.ceil(this.totalTask / this.pageSize);
+    console.log(this.pageNumber+'  '+this.totalTask+'  '+this.pageSize+'  '+this.pageCurrent)
     this.listUserPaging = this.listUser.slice(this.pageCurrent * this.pageSize, (this.pageCurrent + 1) * this.pageSize);
+    console.log(this.listUserPaging)
+
 
   }
   pageChange(event: any) {
     this.pageCurrent = event.first;
     this.pageSize = event.rows;
   }
-  createSuccess(event: any){
+  updateSuccess(value:string){
+    this.getListUser();
+    this.messageService.add({ severity: 'success', summary: 'Lưu thành công', detail: 'Lưu thành công tài khoản '+value+'.' });
+  }
+  createSuccess(event: string){
+    this.getListUser();
+    this.messageService.add({ severity: 'success', summary: 'Tạo thành công', detail: 'Tạo thành công tài khoản '+event+'.' });
 
   }
   deleteSeries(){}
 
+  deleteUser(userDelete:User){
+    this.adminService.deleteUser(userDelete.userId as Guid).subscribe(
+      (response)=>{
+        this.messageService.add({ severity: 'success', summary: 'Xóa thành công', detail: 'Xóa thành công tài khoản '+userDelete.userName+'.' });
+        this.getListUser();
+
+      }
+
+    )
+  }
 }

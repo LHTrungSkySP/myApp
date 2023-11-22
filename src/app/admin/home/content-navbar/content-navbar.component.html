@@ -2,12 +2,12 @@
 
   <p-button  (onClick)="showCreateDialog=!showCreateDialog" [style]="{'position': 'static'}"  [outlined]="true" size="small" label="Create"></p-button>
   <p-button severity="danger" (click)="confirmOke()" [style]="{'position': 'static'}"  [outlined]="true" size="small" label="Delete"></p-button>
+
 </div>
 <p-dialog [modal]="true" [dismissableMask]="true" *ngIf="showCreateDialog" [(visible)]="showCreateDialog"
   [style]="{'width': '20vw','min-width':'450px','z-index':'100'}" >
 
-  <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
-
+  <form [formGroup]="addUserForm" (ngSubmit)="createUser()">
 
   <div class="text-center mb-5">
     <div class="text-900 text-3xl font-medium ">Tạo tài khoản</div>
@@ -36,7 +36,7 @@
         </div>
     </div>
 
-    <label for="passWord" class="block text-900 font-medium mb-2">Xác nhận mật khẩu</label>
+    <!-- <label for="passWord" class="block text-900 font-medium mb-2">Xác nhận mật khẩu</label>
     <div class="mb-3">
       <div class="card flex justify-content-center">
         <p-password [inputStyle]="{'width':'100%'}" class="w-full"
@@ -47,19 +47,21 @@
           [style]="{'width':'100%'}"
           ></p-password>
         </div>
-    </div>
+    </div> -->
 
-    <label for="passWord" class="block text-900 font-medium mb-2">Quản trị viên</label>
     <div class="mb-3">
-      <div class="card flex justify-content-center">
-        <input type="text" formControlName="role">
+      <span for="passWord" class="text-right block text-900 font-medium mb-2">Quản trị viên</span>
+      <div class="justify-content-end card flex">
+        <p-checkbox
+        [binary]="true" inputId="binary" formControlName="role">
+      </p-checkbox>
         </div>
     </div>
 
 
   </div>
   <div class="flex justify-content-center">
-    <button type="submit" pButton (click)="createTask()">Tạo task</button>
+    <button type="submit" pButton type="submit">Tạo tài khoản</button>
   </div>
 </form>
 </p-dialog>

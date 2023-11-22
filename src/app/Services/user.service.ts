@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { User } from '../Models/user';
-import { LOGIN_URL } from '../Helpers/constance';
-import { AuthenticateRequest } from '../Models/authenticate';
+import { SERVER_URL } from '../Helpers/constance';
+import { Guid } from 'guid-typescript';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
 
     constructor(private http: HttpClient) { }
 
-    getAllUser() {
-        return this.http.get<User[]>(LOGIN_URL+`/user`);
+    register(username: string, password: string){
+      const registerRequest = {
+        userName: username,
+        password: password,
+        role: 0
+      }
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+      });
+      return this.http.post(SERVER_URL + `/user/register`, registerRequest, { headers, observe: 'response' });
     }
 
-    register(user: AuthenticateRequest) {
-        return this.http.post(LOGIN_URL+`/user/register`, user);
-    }
-
-    delete(id: number) {
-        return this.http.delete(`/users/${id}`);
-    }
 }

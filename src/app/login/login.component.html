@@ -15,7 +15,6 @@
             <input formControlName="username" class="form-control"
             [class.ng-invalid.ng-dirty]="submitted && f['username'].errors"
             type="text" placeholder="User Name" pInputText class="w-full"
-            formControlName="username"
             >
           </div>
         </div>
@@ -25,7 +24,6 @@
           <div class="card flex justify-content-center">
             <p-password [inputStyle]="{'width':'100%'}" class="w-full"
               styleClass="p-password p-component p-inputwrapper p-input-icon-right"
-              [class.ng-invalid.ng-dirty]="submitted && f['password'].errors"
               [toggleMask]="true" [feedback]="false"
               formControlName="password"
               [style]="{'width':'100%'}"
@@ -43,7 +41,7 @@
           <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Quên mật khẩu?</a>
         </div>
         <div class="form-group">
-            <button (click)="onSubmit()" pButton [disabled]="loading" class="btn btn-primary">
+            <button type="submit" pButton [disabled]="loading" class="btn btn-primary">
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
               Đăng nhập
           </button>

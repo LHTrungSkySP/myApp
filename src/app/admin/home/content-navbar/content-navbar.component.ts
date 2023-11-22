@@ -1,8 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { AuthenticateRequest } from 'src/app/Models/authenticate';
+import { MessageService } from 'primeng/api';
 import { RegisterUser } from 'src/app/Models/user';
+import { AdminService } from 'src/app/Services/admin.service';
+import { UserRolePipe } from 'src/app/pipe/user-role.pipe';
+
 
 @Component({
   selector: 'app-content-navbar',
@@ -11,17 +13,18 @@ import { RegisterUser } from 'src/app/Models/user';
   providers: [MessageService]
 })
 export class ContentNavbarComponent implements OnInit {
-  @Output() createSuccess = new EventEmitter<AuthenticateRequest>();
+  @Output() createSuccess = new EventEmitter<string>();
   @Output() deleteSuccess = new EventEmitter();
 
   // listTypeTask: TypeTask[];
   // listTypeStatus: TypeStatus[];
-  newRegisterUser: RegisterUser = new RegisterUser();
   showCreateDialog = false;
   showDeleteDialog = false;
 
   loading = false;
   submitted = false;
+
+  checkRole:boolean=false;
 
   addUserForm!: FormGroup;
 
@@ -30,8 +33,8 @@ export class ContentNavbarComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
+    private adminService: AdminService,
+    private userRolePipe: UserRolePipe
     // private listTaskService: ListTaskService,
     // private listTaskTypeService: ListTypeTaskService,
     // private listTypeStatusTaskService: ListTypeStatusTaskService
@@ -44,18 +47,27 @@ export class ContentNavbarComponent implements OnInit {
     this.addUserForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
-      passwordComfirm: ['', Validators.required],
-      role: ['', Validators.required],
+      role: [false, Validators.required],
     });
   }
-
-  createTask(): void {
-    // this.listTaskService.addData(this.newTask);
-    this.createSuccess.emit(this.newRegisterUser);
-    this.newRegisterUser = new RegisterUser();
-    this.showCreateDialog = false;
+  createUser() {
+    this.submitted = true;
+    if (this.addUserForm.invalid) {
+      return;
+    }
+    this.loading = true;
+    this.adminService.addUser(this.f["username"].value, this.f["password"].value,this.f["role"].value).subscribe
+      (
+        (respone) => {
+          console.log('Success respone:  ', respone.status);
+          this.createSuccess.emit(this.f["username"].value);
+          this.showCreateDialog = false;
+        },
+        (error) => {
+          console.log('Login error: ', error);
+        }
+      )
   }
-  onSubmit(){}
 
   confirmOke() {
     // this.confirmationService.confirm({
@@ -72,4 +84,5 @@ export class ContentNavbarComponent implements OnInit {
   deleteMess() {
     // this.messageService.add({ severity: 'success', summary: 'Xóa thành công', detail: 'Xóa thành công các task đã chọn.' });
   }
+
 }

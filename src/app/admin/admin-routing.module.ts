@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { ListAccountComponent } from './home/list-account/list-account.component';
 import { RoleGuardService } from '../Helpers/role.guard';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { DetailAccountComponent } from './home/detail-account/detail-account.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,14 @@ const routes: Routes = [
       {
         path: 'list-account',
         component: ListAccountComponent,
+      },
+      {
+        path: '',
+        component: ListAccountComponent,
+      },
+      {
+        path: 'detail/:userId',
+        component: DetailAccountComponent
       }
     ],
   },

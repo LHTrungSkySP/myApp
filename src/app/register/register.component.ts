@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../Services/authentication.service';
+import { UserService } from '../Services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -23,6 +24,7 @@ export class RegisterComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
+    private userService: UserService,
     // private alertService: AlertService
   ) {
     // redirect to home if already logged in
@@ -52,7 +54,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.authenticationService.register(this.f["username"].value, this.f["password"].value).subscribe
+    this.userService.register(this.f["username"].value, this.f["password"].value).subscribe
       (
         (respone) => {
           console.log('Success respone:  ', respone.status);

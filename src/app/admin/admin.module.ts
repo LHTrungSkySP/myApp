@@ -10,15 +10,23 @@ import { ContentNavbarComponent } from './home/content-navbar/content-navbar.com
 
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MenubarModule } from 'primeng/menubar';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
+import { CheckboxModule } from 'primeng/checkbox';
 import { PaginatorModule } from 'primeng/paginator';
+import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DetailAccountComponent } from './home/detail-account/detail-account.component';
+import { SideBarComponent } from './home/side-bar/side-bar.component';
+import { UserRolePipe } from '../pipe/user-role.pipe';
+
 
 @NgModule({
   declarations: [
@@ -26,6 +34,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ContentNavbarComponent,
     ListAccountComponent,
     NavbarComponent,
+    DetailAccountComponent,
+    SideBarComponent,
+    UserRolePipe,
   ],
   imports: [
     CommonModule,
@@ -42,7 +53,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     PaginatorModule,
     ReactiveFormsModule,
     FormsModule,
-
+    BrowserAnimationsModule,
+    InputTextModule,
+    CheckboxModule,
+    ConfirmDialogModule,
 
   ]
 })

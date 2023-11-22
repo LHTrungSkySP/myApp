@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
           let userInforAuth = respone.body as AuthenticateRespone;
           localStorage.setItem('currentUser',JSON.stringify(userInforAuth));
           this.authenticationService.updateToken(userInforAuth);
-          console.log(userInforAuth.role);
+          // console.log(userInforAuth.role);
           if(userInforAuth.role==0){
             this.router.navigate(['/']);
             return;
