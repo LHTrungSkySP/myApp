@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { User } from 'src/app/Models/user';
 import { AdminService } from 'src/app/Services/admin.service';
 
 @Component({
   selector: 'app-list-account',
   templateUrl: './list-account.component.html',
-  styleUrls: ['./list-account.component.scss']
+  styleUrls: ['./list-account.component.scss'],
+  providers: [ConfirmationService, MessageService]
 })
 export class ListAccountComponent implements OnInit {
   listUser: User[]=new Array<User>();
@@ -25,6 +26,7 @@ export class ListAccountComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
+    private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private router: Router
     ) {
@@ -69,16 +71,31 @@ export class ListAccountComponent implements OnInit {
   createSuccess(event: string){
     this.getListUser();
     this.messageService.add({ severity: 'success', summary: 'Tạo thành công', detail: 'Tạo thành công tài khoản '+event+'.' });
-
   }
-  deleteSeries(){}
-
+  deleteSeries(){
+    this.listUser.forEach(element => {
+      if(element.checked){
+        this.deleteUser(element);
+      }
+    });
+  }
+  confirmOke(user: User) {
+    this.confirmationService.confirm({
+      message: 'Bạn muốn xóa tài khoản ' + user.userName + ' phải không?',
+      header: 'Xác nhận xóa',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.deleteUser(user);
+      },
+      reject: () => {
+      }
+    });
+  }
   deleteUser(userDelete:User){
     this.adminService.deleteUser(userDelete.userId as Guid).subscribe(
       (response)=>{
         this.messageService.add({ severity: 'success', summary: 'Xóa thành công', detail: 'Xóa thành công tài khoản '+userDelete.userName+'.' });
         this.getListUser();
-
       }
 
     )

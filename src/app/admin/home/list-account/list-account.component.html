@@ -1,7 +1,7 @@
 <!-- <div class="flex flex-column h-full">
   <p-toast></p-toast>
    <app-content-navbar (createSuccess)="createSuccess($event);" (deleteSuccess)="deleteSeries()"></app-content-navbar> -->
-<div class="flex justify-content-center h-screen mt-3">
+<div class="flex justify-content-center mt-3">
   <div class="flex-column flex ">
   <p-toast></p-toast>
   <app-content-navbar (createSuccess)="createSuccess($event);" (deleteSuccess)="deleteSeries()"></app-content-navbar>
@@ -32,7 +32,7 @@
             <td class="flex">
               <!-- <p-button icon="pi pi-wrench"  [rounded]="true" [styleClass]="'line-height-1'"></p-button> -->
               <p-button [routerLink]="['detail',user.userId]" size="small" [styleClass]="'h-1rem w-1rem'" icon="pi pi-wrench" [rounded]="true" [text]="true" severity="secondary"></p-button>
-              <p-button (onClick)="deleteUser(user)" size="small" [styleClass]="'h-1rem w-1rem'" icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"></p-button>
+              <p-button (onClick)="confirmOke(user)" size="small" [styleClass]="'h-1rem w-1rem'" icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"></p-button>
             </td>
           </tr>
         </ng-template>
@@ -43,8 +43,9 @@
   </div>
 </div>
 </div>
-
-
+<div class="card flex justify-content-center gap-2">
+  <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+</div>
 <!-- delete  -->
 <!-- <div class="card flex justify-content-center gap-2">
   <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>

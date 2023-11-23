@@ -1,16 +1,16 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
-import { RegisterUser } from 'src/app/Models/user';
+import { ConfirmationService, MessageService } from 'primeng/api';
+// import { RegisterUser } from 'src/app/Models/user';
 import { AdminService } from 'src/app/Services/admin.service';
-import { UserRolePipe } from 'src/app/pipe/user-role.pipe';
+// import { UserRolePipe } from 'src/app/pipe/user-role.pipe';
 
 
 @Component({
   selector: 'app-content-navbar',
   templateUrl: './content-navbar.component.html',
   styleUrls: ['./content-navbar.component.scss'],
-  providers: [MessageService]
+  providers: [ConfirmationService, MessageService]
 })
 export class ContentNavbarComponent implements OnInit {
   @Output() createSuccess = new EventEmitter<string>();
@@ -34,7 +34,8 @@ export class ContentNavbarComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private adminService: AdminService,
-    private userRolePipe: UserRolePipe
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
     // private listTaskService: ListTaskService,
     // private listTaskTypeService: ListTypeTaskService,
     // private listTypeStatusTaskService: ListTypeStatusTaskService
@@ -44,6 +45,10 @@ export class ContentNavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.resetAddUserForm();
+  }
+
+  resetAddUserForm(){
     this.addUserForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -61,6 +66,7 @@ export class ContentNavbarComponent implements OnInit {
         (respone) => {
           console.log('Success respone:  ', respone.status);
           this.createSuccess.emit(this.f["username"].value);
+          this.resetAddUserForm();
           this.showCreateDialog = false;
         },
         (error) => {
@@ -70,16 +76,16 @@ export class ContentNavbarComponent implements OnInit {
   }
 
   confirmOke() {
-    // this.confirmationService.confirm({
-    //   message: 'Bạn muốn xóa task những task đã chọn không?',
-    //   header: 'Xác nhận xóa',
-    //   icon: 'pi pi-exclamation-triangle',
-    //   accept: () => {
-    //     this.deleteSuccess.emit();
-    //   },
-    //   reject: () => {
-    //   }
-    // });
+    this.confirmationService.confirm({
+      message: 'Bạn muốn xóa task những task đã chọn không?',
+      header: 'Xác nhận xóa',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.deleteSuccess.emit();
+      },
+      reject: () => {
+      }
+    });
   }
   deleteMess() {
     // this.messageService.add({ severity: 'success', summary: 'Xóa thành công', detail: 'Xóa thành công các task đã chọn.' });

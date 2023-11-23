@@ -18,10 +18,15 @@ import { JwtInterceptor } from './Helpers/jwt.interceptor';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { HomeComponent } from './home/home.component';
-import { NavbarComponent } from './home/navbar/navbar.component';
+import { HomeComponent } from './User/home/home.component';
+import { NavbarComponent } from './User/home/navbar/navbar.component';
 import { Page403Component } from './Pages/page-403/page-403.component';
 import { AdminRoutingModule } from './admin/admin-routing.module';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { SideBarComponent } from './User/home/side-bar/side-bar.component';
+import { UserModule } from './User/user.module';
+import { UserRoutingModule } from './User/user-routing.module';
+
 // import { AlertComponent } from './_components';
 // import { HomeComponent } from './home';
 
@@ -36,9 +41,11 @@ import { AdminRoutingModule } from './admin/admin-routing.module';
         ButtonModule,
         MenubarModule,
         AvatarModule,
-        AdminModule,
-        AdminRoutingModule,
         AppRoutingModule,
+        AdminModule,
+        // AdminRoutingModule,
+        UserModule,
+        // UserRoutingModule,
     ],
     declarations: [
         AppComponent,
@@ -47,11 +54,13 @@ import { AdminRoutingModule } from './admin/admin-routing.module';
         HomeComponent,
         NavbarComponent,
         Page403Component,
+        SideBarComponent,
         // AlertComponent,
         // HomeComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        MessageService,ConfirmationService
         // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 
         // provider used to create fake backend

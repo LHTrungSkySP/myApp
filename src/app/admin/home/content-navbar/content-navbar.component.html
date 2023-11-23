@@ -18,7 +18,7 @@
       <div class="card flex justify-content-center">
         <input formControlName="username" class="form-control"
         [class.ng-invalid.ng-dirty]="submitted && f['username'].errors"
-        type="text" placeholder="Tên đăng nhập" pInputText class="w-full"
+        type="text" placeholder="Tên đăng nhập" pInputText class="w-full" autocomplete="off"
         >
       </div>
     </div>
@@ -65,3 +65,8 @@
   </div>
 </form>
 </p-dialog>
+<div class="card flex justify-content-center gap-2">
+  <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+</div>
+
+

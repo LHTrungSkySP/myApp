@@ -7,7 +7,6 @@ import { ListAccountComponent } from './home/list-account/list-account.component
 import { NavbarComponent } from './home/navbar/navbar.component';
 import { ContentNavbarComponent } from './home/content-navbar/content-navbar.component';
 
-
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -26,6 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetailAccountComponent } from './home/detail-account/detail-account.component';
 import { SideBarComponent } from './home/side-bar/side-bar.component';
 import { UserRolePipe } from '../pipe/user-role.pipe';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -57,7 +57,7 @@ import { UserRolePipe } from '../pipe/user-role.pipe';
     InputTextModule,
     CheckboxModule,
     ConfirmDialogModule,
-
-  ]
+  ],
+  providers: [ConfirmationService,MessageService],
 })
 export class AdminModule { }

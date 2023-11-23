@@ -1,0 +1,98 @@
+<div class="flex flex-column">
+  <!-- BANNER  -->
+  <div style="height: 200px;" class="surface-400 w-full">
+    <div style="height: 200px;" class="surface-400">
+
+    </div>
+
+  </div>
+<div class="w-full flex justify-content-center">
+  <div class="w-9">
+    <!-- content  -->
+    <div class="mt-4 mb-4">
+      <!-- row  -->
+
+
+      <div class="m-2">
+        <!-- header  -->
+        <div class="flex pb-1 mb-4">
+          <div (click)="sortNameAction()" style="max-width: 200px;min-width: 200px;" class="flex justify-content-center">
+            Tên&nbsp;
+            <i class="pi pi-sort-alt"></i>
+          </div>
+          <div (click)="sortIDAction()" class="w-3 flex justify-content-end">
+            Mã (ID)&nbsp;
+            <i class="pi pi-sort-alt"></i>
+          </div>
+          <div (click)="sortPriceAction()" class="w-3 flex justify-content-end">
+            Giá&nbsp;
+            <i class="pi pi-sort-alt"></i>
+          </div>
+          <div (click)="sortDateAction()" class="w-3 flex justify-content-end">
+            Ngày lên sàn&nbsp;
+            <i class="pi pi-sort-alt"></i>
+          </div>
+          <div (click)="sortTotalSupplyAction()" class="w-3 flex justify-content-end">
+            Đã khai thác&nbsp;
+            <i class="pi pi-sort-alt"></i>
+          </div>
+          <div (click)="sortMarketPairAction()" class="w-3 flex justify-content-end">
+            Tồn đọng&nbsp;
+            <i class="pi pi-sort-alt"></i>
+          </div>
+          <div class="w-3 flex justify-content-end">Tổng</div>
+
+        </div>
+
+        <!-- body  -->
+        <div>
+          <ng-template ngFor let-bitcoin [ngForOf]="listBitcoinPaging">
+            <div class="flex">
+              <!-- Tên  -->
+              <div class="flex "  style="max-width: 200px;min-width: 200px;" >
+                <div class="">
+                  <img class="m-2 h-2rem" src="https://cryptologos.cc/logos/bnb-bnb-logo.png">
+
+                </div>
+                <b class="line-height-4 pb-2 pt-2">{{bitcoin.symbol}}&nbsp;</b>
+                <span class="font-italic
+              text-overflow-ellipsis white-space-nowrap overflow-hidden
+                line-height-4 pb-2 pt-2">{{bitcoin.slug}}</span>
+              </div>
+              <!-- Mã  -->
+              <div class="w-3 flex justify-content-end line-height-4 pb-2 pt-2">
+                {{bitcoin.id}}
+              </div>
+              <!-- Giá  -->
+              <div class="w-3 flex justify-content-end line-height-4 pb-2 pt-2">
+                {{bitcoin.quote.USD.price | number:'0.1-3'}}
+              </div>
+              <!-- Ngày lên sàn  -->
+              <div class="w-3 flex justify-content-end line-height-4 pb-2 pt-2">
+                {{bitcoin.date_added | date:'d/M/yyyy'}}
+              </div>
+              <!-- Đã khai thác  -->
+              <div class="w-3 flex justify-content-end line-height-4 pb-2 pt-2">
+                {{bitcoin.total_supply | BitcoinPipe}}
+              </div>
+              <!-- Tồn đọng  -->
+              <div class="w-3 flex justify-content-end line-height-4 pb-2 pt-2">
+                {{bitcoin.num_market_pairs}}
+              </div>
+              <!-- Tổng khai thác  -->
+              <div class="w-3 flex justify-content-end line-height-4 pb-2 pt-2">
+                {{bitcoin.max_supply|BitcoinPipe }}
+              </div>
+            </div>
+            <hr class="ml-5">
+          </ng-template>
+          <div class="card flex justify-content-center">
+            <p-paginator (onPageChange)="onPageChange($event)" [first]="this.startPaging" [rows]="this.totalRecordAPage" [totalRecords]="this.listBitcoin.length"></p-paginator>
+        </div>
+        </div>
+        <!-- </ng-template> -->
+      </div>
+    </div>
+  </div>
+</div>
+</div>

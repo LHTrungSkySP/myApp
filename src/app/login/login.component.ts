@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
           this.authenticationService.updateToken(userInforAuth);
           // console.log(userInforAuth.role);
           if(userInforAuth.role==0){
-            this.router.navigate(['/']);
+            this.router.navigate(['home']);
             return;
           }
           else if(userInforAuth.role==1){
@@ -68,6 +68,8 @@ export class LoginComponent implements OnInit {
         },
         (error)=>{
           console.log('Login error: ',error);
+          this.loading = false;
+
         },
       )
   }

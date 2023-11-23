@@ -15,10 +15,9 @@ export class RoleGuardService {
     const currentUser = this.authenticationService.currentUserValue;
     // this will be passed from the route config
     // on the data property
-    const expectedRole = route.data['role'];
     if (
       !this.authenticationService.currentUserValue ||
-      currentUser?.role != expectedRole
+      currentUser?.role !=  route.data['role']
     ) {
       this.router.navigate(['/403']);
       return false;
