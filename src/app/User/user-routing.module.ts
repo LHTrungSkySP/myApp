@@ -10,6 +10,18 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    children:[
+      {
+        path: '',
+        component: ListCoinComponent,
+        // canActivate: [AuthGuard]
+      },
+      {
+        path: 'detail',
+        component: DetailComponent,
+        canActivate: [AuthGuard]
+      }
+    ]
   },
   {
     path: 'home',
@@ -27,7 +39,7 @@ const routes: Routes = [
       }
     ]
   },
-  { path: '**', redirectTo: '' }
+  // { path: '**', redirectTo: '' }
 
 ]
 

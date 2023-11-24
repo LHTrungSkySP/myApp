@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
 
 @Component({
@@ -8,11 +8,19 @@ import { AuthenticationService } from 'src/app/Services/authentication.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  constructor(private authenticationService: AuthenticationService, private router: Router){
+
+  @Input() role: number=0;
+
+  constructor(private authenticationService: AuthenticationService
+    , private router: Router
+    ){
 
   }
   logout(){
     this.authenticationService.logout();
     this.router.navigate(['/login']);
+  }
+  editInfor(){
+    this.router.navigate(['/detail',this.authenticationService.currentUserValue?.user_ID]);
   }
 }

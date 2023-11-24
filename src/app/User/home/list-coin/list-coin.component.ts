@@ -8,7 +8,7 @@ import { BitcoinService } from 'src/app/Services/bitcoin.service';
   styleUrls: ['./list-coin.component.scss']
 })
 export class ListCoinComponent implements OnInit {
-  listBitcoin!: BitcoinInfor[];
+  listBitcoin: BitcoinInfor[]=[];
   listBitcoinPaging!: BitcoinInfor[];
   // abc!: BitcoinInfor;
   sortName = false;
@@ -50,16 +50,16 @@ export class ListCoinComponent implements OnInit {
   sortNameAction() {
     if (this.sortName) {
       this.listBitcoin.sort((x, y) => {
-        if (x.slug < y.slug) return 1;
-        if (x.slug > y.slug) return -1;
+        if (x.symbol < y.symbol) return 1;
+        if (x.symbol > y.symbol) return -1;
         else return 0;
       })
       this.sortName = false;
     }
     else {
       this.listBitcoin.sort((x, y) => {
-        if (x.slug > y.slug) return 1;
-        if (x.slug < y.slug) return -1;
+        if (x.symbol > y.symbol) return 1;
+        if (x.symbol < y.symbol) return -1;
         else return 0;
       })
       this.sortName = true;

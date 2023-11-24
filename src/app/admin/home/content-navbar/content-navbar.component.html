@@ -21,6 +21,9 @@
         type="text" placeholder="Tên đăng nhập" pInputText class="w-full" autocomplete="off"
         >
       </div>
+      <span class="text-red-600" *ngIf="addUserForm.get('username')!.hasError('customError')">
+        Tên tài khoản đã được sử dụng
+      </span>
     </div>
 
     <label for="passWord" class="block text-900 font-medium mb-2">Mật khẩu</label>
@@ -34,6 +37,9 @@
           [style]="{'width':'100%'}"
           ></p-password>
         </div>
+        <span class="text-red-600" *ngIf="addUserForm.get('password')!.hasError('required')">
+          Mật khẩu không được để trống
+        </span>
     </div>
 
     <!-- <label for="passWord" class="block text-900 font-medium mb-2">Xác nhận mật khẩu</label>

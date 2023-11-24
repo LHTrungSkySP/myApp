@@ -5,6 +5,7 @@ import { RegisterComponent } from './register/register.component';
 // import { HomeComponent } from './User/home/home.component';
 // import { AuthGuard } from './Helpers/auth.guard';
 import { Page403Component } from './Pages/page-403/page-403.component';
+import { HomeComponent } from './User/home/home.component';
 // import { DetailComponent } from './User/home/detail/detail.component';
 
 const routes: Routes = [

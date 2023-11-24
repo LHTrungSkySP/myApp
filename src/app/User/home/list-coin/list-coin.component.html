@@ -64,7 +64,8 @@
                 {{bitcoin.id}}
               </div>
               <!-- Giá  -->
-              <div class="w-3 flex justify-content-end line-height-4 pb-2 pt-2">
+              <div class="w-3 flex justify-content-end line-height-4 pb-2 pt-2" [class.text-red-600]="bitcoin.quote.USD.price>100"
+                [class.text-green-600]="bitcoin.quote.USD.price<=1">
                 {{bitcoin.quote.USD.price | number:'0.1-3'}}
               </div>
               <!-- Ngày lên sàn  -->

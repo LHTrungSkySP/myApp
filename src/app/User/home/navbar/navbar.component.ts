@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
 
@@ -8,6 +8,7 @@ import { AuthenticationService } from 'src/app/Services/authentication.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
+  @Input() role: number=0;
   constructor(private authenticationService: AuthenticationService, private router: Router){
 
   }

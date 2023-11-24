@@ -1,13 +1,19 @@
 <div class="card ">
-  <p-menubar styleClass="surface-0 border-none">
+  <p-menubar>
       <ng-template pTemplate="start">
-          <img src="https://mesoco.vn/wp-content/uploads/2022/04/logo.png" alt="mesoco.png" height="40" class="mr-2" />
+          <img [routerLink]="['/home']" src="https://mesoco.vn/wp-content/uploads/2022/04/logo.png" alt="mesoco.png" height="40" class="mr-2" />
       </ng-template>
       <ng-template pTemplate="end">
         <div class="flex">
-          <p-button class="flex align-items-center" [styleClass]="'max-h-3rem'" (click)="logout()" size="small">Logout</p-button>
-          <div class="col-12 md:col-4">
-            <p-avatar class="flex align-items-center" [styleClass]="'h-auto'" image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png" pBadge value="4"  ></p-avatar>
+          <div class="col-12 md:col-4 relative containerAvatar cursor-pointer ">
+            <p-avatar class="" [styleClass]="" image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png" pBadge value="4"  ></p-avatar>
+            <div style="	transform: translateX(-80%);" class="w-max border-round shadow-3 p-2 surface-0 absolute subAvatar">
+              <!-- <div class="p-1 pr-3 pl-3"></div> -->
+              <div [routerLink]="['/detail']" class="p-1 pr-3 pl-3">Thông tin tài khoản</div>
+              <div [routerLink]="['/home']" class="p-1 pr-3 pl-3">Trang chủ</div>
+              <hr class="ml-3 mr-3">
+              <div (click)="logout()" class="p-1 pr-3 pl-3">Đăng xuất</div>
+            </div>
           </div>
 
         </div>

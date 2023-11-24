@@ -5,13 +5,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthenticateRespone } from '../Models/authenticate';
 
 import { SERVER_URL } from '../Helpers/constance';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<AuthenticateRespone | null>;
   public currentUser: Observable<AuthenticateRespone | null>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private router: Router) {
     this.currentUserSubject = new BehaviorSubject<AuthenticateRespone | null>(JSON.parse(localStorage.getItem('currentUser') as string));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -38,6 +39,7 @@ export class AuthenticationService {
     // remove user from local storage to log user ou
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+    this.router.navigate(['/login']);
   }
 
 

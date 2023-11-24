@@ -20,7 +20,13 @@
               <input  class="w-full"
               [class.ng-invalid.ng-dirty]="submitted && f['username'].errors"
               pInputText [(ngModel)]="user.userName" formControlName="username">
+
             </div>
+            <span class="text-red-600" *ngIf="detailForm.get('username')!.hasError('customError')">
+              Tên tài khoản đã được sử dụng
+            </span>
+
+
             <div class="h-4rem flex align-items-center">
               <div class="card flex justify-content-center">
                 <p-password class="w-full"
@@ -28,9 +34,14 @@
                   [toggleMask]="true" [feedback]="false"
                   [(ngModel)]="user.password"
                   formControlName="password"
+                  [class.ng-invalid.ng-dirty]="submitted && f['password'].errors"
                   ></p-password>
                 </div>
-            </div>
+
+              </div>
+              <span class="text-red-600" *ngIf="detailForm.get('password')!.hasError('required')">
+                Mật khẩu không được để trống
+              </span>
             <div class="h-4rem flex align-items-center">
               <p-checkbox  [ngModel]="user.role | userRolePipe:'boolean'" (onclick)="setRole($event)" [binary]="true" inputId="binary" formControlName="role"></p-checkbox><span class="ml-2">Admin</span>
             </div>

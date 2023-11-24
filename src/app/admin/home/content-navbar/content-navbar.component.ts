@@ -1,6 +1,9 @@
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { catchError, map, switchMap, throwError } from 'rxjs';
+import { STATUS_CODE } from 'src/app/Helpers/constance';
 // import { RegisterUser } from 'src/app/Models/user';
 import { AdminService } from 'src/app/Services/admin.service';
 // import { UserRolePipe } from 'src/app/pipe/user-role.pipe';
@@ -24,7 +27,7 @@ export class ContentNavbarComponent implements OnInit {
   loading = false;
   submitted = false;
 
-  checkRole:boolean=false;
+  checkRole: boolean = false;
 
   addUserForm!: FormGroup;
 
@@ -48,10 +51,10 @@ export class ContentNavbarComponent implements OnInit {
     this.resetAddUserForm();
   }
 
-  resetAddUserForm(){
+  resetAddUserForm() {
     this.addUserForm = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
+      password: ['', [Validators.required]],
       role: [false, Validators.required],
     });
   }
@@ -61,18 +64,40 @@ export class ContentNavbarComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.adminService.addUser(this.f["username"].value, this.f["password"].value,this.f["role"].value).subscribe
-      (
-        (respone) => {
-          console.log('Success respone:  ', respone.status);
-          this.createSuccess.emit(this.f["username"].value);
-          this.resetAddUserForm();
-          this.showCreateDialog = false;
+    this.adminService.addUser(this.f["username"].value, this.f["password"].value, this.f["role"].value)
+    .subscribe(
+        (response) => {
+          if(response.status==STATUS_CODE.CREATED){
+            this.createSuccess.emit(this.f["username"].value);
+            this.resetAddUserForm();
+            this.showCreateDialog = false;
+          } else if (response.status == STATUS_CODE.CONFLICT) {
+            const usernameControl = this.addUserForm.get('username');
+            usernameControl?.setErrors({ customError: true });
+          }
         },
         (error) => {
-          console.log('Login error: ', error);
-        }
-      )
+          const usernameControl = this.addUserForm.get('username');
+          usernameControl?.setErrors({ customError: true });
+        },
+    )
+      // .pipe(
+      //   map((response: HttpResponse<any>) => {
+      //     if(response.status==STATUS_CODE.CREATED){
+      //       this.createSuccess.emit(this.f["username"].value);
+      //       this.resetAddUserForm();
+      //       this.showCreateDialog = false;
+      //     } else if (response.status == STATUS_CODE.CONFLICT) {
+      //       const usernameControl = this.addUserForm.get('username');
+      //       usernameControl?.setErrors({ customError: true });
+      //     }
+      //   }),
+      //   catchError((error: any) => {
+      //     // Handle any additional errors during the HTTP request
+      //     console.error('HTTP error:', error);
+      //     return throwError(error);
+      //   })
+      // )
   }
 
   confirmOke() {
@@ -91,4 +116,44 @@ export class ContentNavbarComponent implements OnInit {
     // this.messageService.add({ severity: 'success', summary: 'Xóa thành công', detail: 'Xóa thành công các task đã chọn.' });
   }
 
+  conflictValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+
+      if (value && value.toLowerCase() === 'conflict') {
+        return { conflict: true };
+      }
+
+      return null;
+    };
+  }
 }
+
+
+// createUser() {
+//   this.submitted = true;
+//   if (this.addUserForm.invalid) {
+//     return;
+//   }
+//   this.loading = true;
+//   this.adminService.addUser(this.f["username"].value, this.f["password"].value,this.f["role"].value)
+//     .pipe(
+//       switchMap((response: HttpResponse<any>) => {}))}
+
+//       (respone) => {
+//         if(respone.status==STATUS_CODE.CREATED){
+//           this.createSuccess.emit(this.f["username"].value);
+//           this.resetAddUserForm();
+//           this.showCreateDialog = false;
+//         }
+//       },
+//       (error) => {
+//         if(error.status==STATUS_CODE.CONFLICT){
+//           let abc=this.addUserForm.get('username');
+//           console.log('áddasd  ',abc);
+//           this.addUserForm.get('username')?.setErrors({ usernameExists: true });
+//         }
+//         else console.log(error.message);
+//       }
+//     )
+// }

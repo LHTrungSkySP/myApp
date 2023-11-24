@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../Services/authentication.service';
 import { UserService } from '../Services/user.service';
@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
+      password: ['', Validators.required,this.passwordValidator()],
       passwordComfirm: ['', Validators.required]
     });
 
@@ -69,5 +69,25 @@ export class RegisterComponent implements OnInit {
     if(this.f["password"].value != this.f["passwordComfirm"].value)
       return false;
     else return true;
+  }
+
+  passwordValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value: string = control.value;
+
+      // Check for at least one uppercase letter
+      const hasUppercase = /[A-Z]/.test(value);
+
+      // Check for a special character
+      const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+
+      // Check length between 8 and 16
+      const isValidLength = value.length >= 8 && value.length <= 16;
+
+      // Combine all checks
+      const isValid = hasUppercase && hasSpecialCharacter && isValidLength;
+
+      return isValid ? null : { invalidPassword: true };
+    };
   }
 }

@@ -21,6 +21,14 @@ export class UserService {
       });
       return this.http.post(SERVER_URL + `/user/register`, registerRequest, { headers, observe: 'response' });
     }
+    updateUser(userid: Guid, username: string, password: string, role: number) {
+      const updateUserRequest = {
+        userName: username,
+        password: password,
+        role: role,
+      }
+      return this.http.put(SERVER_URL + `/User/` + userid, updateUserRequest, { observe: 'response' })
+    }
 
 
 

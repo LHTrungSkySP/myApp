@@ -1,1 +1,58 @@
-<p>detail works!</p>
+<div class="w-full flex justify-content-center">
+  <div class="w-5">
+    <!-- content  -->
+    <div class="mt-5 pb-4 border-round shadow-2">
+      <form [formGroup]="detailForm" (ngSubmit)="saveUser()">
+        <p-button [routerLink]="['/home']" [styleClass]="'absolute'"  icon="pi pi-arrow-left"></p-button>
+              <div>
+                <h2 class="text-center pt-4 ">Chi tiết tài khoản</h2>
+              </div>
+              <div class="detail-acc__view flex m-5">
+                <div class="detail-acc__view-lable w-3">
+                  <!-- <div class="h-4rem flex align-items-center">Mã người dùng</div> -->
+                  <div class="h-4rem flex align-items-center">Tên người dùng</div>
+                  <div class="h-4rem flex align-items-center">Mật khẩu</div>
+                  <div class="h-4rem flex align-items-center">Loại người dùng</div>
+                  <div class="h-4rem flex align-items-center">Ngày tạo</div>
+                </div>
+                <div class="detail-acc__view-content">
+                  <!-- <div class="h-4rem flex align-items-center">{{userInfor.user_ID}}</div> -->
+                  <div class="h-4rem flex align-items-center">
+                    <input class="w-full"
+                    [class.ng-invalid.ng-dirty]="submitted && f['username'].errors"
+                    pInputText [(ngModel)]="userInfor.userName" formControlName="username">
+                  </div>
+                  <span class="text-red-600" *ngIf="detailForm.get('username')!.hasError('customError')">
+                    Tên tài khoản đã được sử dụng
+                  </span>
+                  <span class="text-red-600" *ngIf="detailForm.get('username')!.hasError('required')">
+                    Tên tài khoản không được để trống
+                  </span>
+                  <div class="h-4rem flex align-items-center">
+                    <div class="card flex justify-content-center">
+                      <p-password class="w-full"
+                        styleClass="p-password p-component p-inputwrapper p-input-icon-right"
+                        [toggleMask]="true" [feedback]="false"
+                        formControlName="password"
+                        ></p-password>
+                      </div>
+                  </div>
+
+                  <span class="text-red-600" *ngIf="detailForm.get('password')!.hasError('required')">
+                    Mật khẩu không được để trống
+                  </span>
+
+                  <div class="h-4rem flex align-items-center">
+                    <span (onclick)="setRole($event)"> {{userInfor.role | userRolePipe:'string'}}</span>
+                  </div>
+                  <label class="h-4rem flex align-items-center" for="">{{userInfor.createdDate | date:'dd/mm/yyyy'}}</label>
+                </div>
+              </div>
+              <div class="flex justify-content-center">
+                <p-button type="submit">Lưu tài khoản</p-button>
+              </div>
+      </form>
+
+    </div>
+  </div>
+</div>

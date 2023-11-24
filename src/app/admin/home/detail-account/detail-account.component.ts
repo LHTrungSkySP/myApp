@@ -4,8 +4,9 @@ import { Guid } from 'guid-typescript';
 import { User } from 'src/app/Models/user';
 import { AdminService } from 'src/app/Services/admin.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserRolePipe } from 'src/app/pipe/user-role.pipe';
+import { UserRolePipe } from 'src/app/Shares/pipe/user-role.pipe';
 import { MessageService } from 'primeng/api';
+import { STATUS_CODE } from 'src/app/Helpers/constance';
 
 
 
@@ -37,7 +38,7 @@ export class DetailAccountComponent implements OnInit {
   ngOnInit(): void {
     this.detailForm = this.formBuilder.group({
       username: ['', Validators.required],
-      password: [''],
+      password: ['',Validators.required],
       role: [false],
     });
 
@@ -70,14 +71,23 @@ export class DetailAccountComponent implements OnInit {
       this.userRolePipe.transform(this.f['role'].value,'number')as number
     ).subscribe
       (
-        (respone) => {
-          this.comeback();
-
+        (response) => {
+          if(response.status==STATUS_CODE.CREATED){
+            this.comeback();
+            // this.createSuccess.emit(this.f["username"].value);
+          } else if (response.status == STATUS_CODE.CONFLICT) {
+            const usernameControl = this.detailForm.get('username');
+            usernameControl?.setErrors({ customError: true });
+          }
         },
         (error) => {
-          console.log('Login error: ', error);
+          const usernameControl = this.detailForm.get('username');
+          usernameControl?.setErrors({ customError: true });
         },
       )
+  }
+  resetAddUserForm() {
+    throw new Error('Method not implemented.');
   }
   setRole(value:any){
     this.user.role= this.userRolePipe.transform(value,'boolean')as number ;

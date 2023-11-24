@@ -7,7 +7,7 @@ import { PasswordModule } from 'primeng/password';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { MenubarModule } from 'primeng/menubar';
+// import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
 import { AdminModule } from './admin/admin.module';
 // used to create fake backend
@@ -18,14 +18,16 @@ import { JwtInterceptor } from './Helpers/jwt.interceptor';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { HomeComponent } from './User/home/home.component';
-import { NavbarComponent } from './User/home/navbar/navbar.component';
+// import { HomeComponent } from './User/home/home.component';
+// import { NavbarComponent } from './User/home/navbar/navbar.component';
 import { Page403Component } from './Pages/page-403/page-403.component';
-import { AdminRoutingModule } from './admin/admin-routing.module';
+// import { AdminRoutingModule } from './admin/admin-routing.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { SideBarComponent } from './User/home/side-bar/side-bar.component';
 import { UserModule } from './User/user.module';
-import { UserRoutingModule } from './User/user-routing.module';
+// import { UserRolePipe } from './Shares/pipe/user-role.pipe';
+import { ErrorInterceptor } from './Helpers/error.interceptor';
+// import { UserRoutingModule } from './User/user-routing.module';
 
 // import { AlertComponent } from './_components';
 // import { HomeComponent } from './home';
@@ -39,9 +41,9 @@ import { UserRoutingModule } from './User/user-routing.module';
         CheckboxModule,
         InputTextModule,
         ButtonModule,
-        MenubarModule,
         AvatarModule,
         AppRoutingModule,
+        // UserRolePipe,
         AdminModule,
         // AdminRoutingModule,
         UserModule,
@@ -51,8 +53,8 @@ import { UserRoutingModule } from './User/user-routing.module';
         AppComponent,
         LoginComponent,
         RegisterComponent,
-        HomeComponent,
-        NavbarComponent,
+        // HomeComponent,
+        // NavbarComponent,
         Page403Component,
         SideBarComponent,
         // AlertComponent,
@@ -60,8 +62,8 @@ import { UserRoutingModule } from './User/user-routing.module';
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-        MessageService,ConfirmationService
-        // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        MessageService,ConfirmationService,
 
         // provider used to create fake backend
         // fakeBackendProvider

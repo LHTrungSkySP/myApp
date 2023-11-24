@@ -24,8 +24,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetailAccountComponent } from './home/detail-account/detail-account.component';
 import { SideBarComponent } from './home/side-bar/side-bar.component';
-import { UserRolePipe } from '../pipe/user-role.pipe';
+// import { UserRolePipe } from '../Shares/pipe/user-role.pipe';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ShareModule } from '../Shares/share/share.module';
 
 
 @NgModule({
@@ -36,9 +37,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     NavbarComponent,
     DetailAccountComponent,
     SideBarComponent,
-    UserRolePipe,
+    // UserRolePipe,
   ],
   imports: [
+    ShareModule,
     CommonModule,
     AdminRoutingModule,
     MenubarModule,

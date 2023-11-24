@@ -1,16 +1,35 @@
 <div class="card ">
   <p-menubar>
-      <ng-template pTemplate="start">
-          <img src="https://mesoco.vn/wp-content/uploads/2022/04/logo.png" alt="mesoco.png" height="40" class="mr-2" />
-      </ng-template>
-      <ng-template pTemplate="end">
-        <div class="flex">
-          <p-button class="flex align-items-center" [styleClass]="'max-h-3rem'" (click)="logout()" size="small">Logout</p-button>
-          <div class="col-12 md:col-4">
-            <p-avatar class="flex align-items-center" [styleClass]="'h-auto'" image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png" pBadge value="4"  ></p-avatar>
+    <ng-template pTemplate="start">
+      <img [routerLink]="['/home']" src="https://mesoco.vn/wp-content/uploads/2022/04/logo.png" alt="mesoco.png"
+        height="40" class="mr-2" />
+    </ng-template>
+    <ng-template pTemplate="end">
+      <div class="flex">
+        <div class="col-12 md:col-4 relative containerAvatar cursor-pointer" *ngIf="role>-1; else noLogin">
+          <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png" pBadge
+            value="4"></p-avatar>
+          <div style="	transform: translateX(-80%);"
+            class="w-max border-round shadow-3 p-2 surface-0 absolute subAvatar">
+            <!-- <div class="p-1 pr-3 pl-3"></div> -->
+            <div [routerLink]="['/detail']" class="p-1 pr-3 pl-3">Thông tin tài khoản</div>
+            <div *ngIf="role==1" [routerLink]="['/admin']" class="p-1 pr-3 pl-3">Trang admin</div>
+            <hr class="ml-3 mr-3">
+            <div (click)="logout()" class="p-1 pr-3 pl-3">Đăng xuất</div>
           </div>
-
         </div>
-      </ng-template>
+
+        <ng-template #noLogin>
+          <div class="col-12 md:col-4 relative containerAvatar cursor-pointer">
+            <div class="flex">
+              <p-button [routerLink]="['/login']" [styleClass]="'w-max'" [size]="'small'">Đăng nhập</p-button>
+              <p-button [routerLink]="['/register']" [styleClass]="'ml-3 w-max'" [size]="'small'">Đăng ký</p-button>
+            </div>
+          </div>
+        </ng-template>
+
+
+      </div>
+    </ng-template>
   </p-menubar>
 </div>

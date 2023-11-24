@@ -5,7 +5,7 @@ import { User } from '../Models/user';
 import { SERVER_URL } from '../Helpers/constance';
 import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
-import { UserRolePipe } from '../pipe/user-role.pipe';
+import { UserRolePipe } from '../Shares/pipe/user-role.pipe';
 @Injectable({
   providedIn: 'root'
 })
